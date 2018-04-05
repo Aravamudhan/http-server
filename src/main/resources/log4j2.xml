@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN">
+	<Appenders>
+		<Console name="consolelog" target="SYSTEM_OUT">
+			<PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n" />
+		</Console>
+		<File name="serverlog" fileName="logs/server.log">
+			<PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n" />
+		</File>
+		<Console name="handler-consolelog" target="SYSTEM_OUT">
+			<PatternLayout pattern="%d{HH:mm:ss.SSS} - %msg%n" />
+		</Console>
+		<File name="handler-serverlog" fileName="logs/server.log">
+			<PatternLayout pattern="%d{HH:mm:ss.SSS} - %msg%n" />
+		</File>
+		<Console name="request-consolelog" target="SYSTEM_OUT">
+			<PatternLayout pattern="%d{HH:mm:ss.SSS} - %msg%n" />
+		</Console>
+		<File name="request-serverlog" fileName="logs/server.log">
+			<PatternLayout pattern="%d{HH:mm:ss.SSS} - %msg%n" />
+		</File>
+		
+	</Appenders>
+	
+	<Loggers>
+		<Root level="error">
+			<AppenderRef ref="consolelog" />
+		</Root>
+		<Logger name="amudhan.httpserver" level="info" additivity="false">
+			<AppenderRef ref="consolelog" />
+			<AppenderRef ref="serverlog" />
+		</Logger>
+		<Logger name="amudhan.httpserver.handlers" level="info" additivity="false">
+			<AppenderRef ref="handler-consolelog" />
+			<AppenderRef ref="handler-serverlog" />
+		</Logger>
+		<Logger name="amudhan.httpserver.request" level="info" additivity="false">
+			<AppenderRef ref="request-consolelog" />
+			<AppenderRef ref="request-serverlog" />
+		</Logger>
+	</Loggers>
+</Configuration>
