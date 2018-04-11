@@ -6,10 +6,6 @@ import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.tika.Tika;
@@ -24,20 +20,6 @@ public class GetRequest implements Request {
 
   @Override
   public void handleRequest(HttpExchange exchange) throws IOException {
-    Headers requestheaders = exchange.getRequestHeaders();
-    Set<Entry<String, List<String>>> headerSet = requestheaders.entrySet();
-    logger.debug("==========Headers==========");
-    for (Entry<String, List<String>> value : headerSet) {
-      logger.trace("{} : {} ", new Object[] {value.getKey(), value.getValue()});
-    }
-    logger.debug("===========================");
-    logger.debug("==========Query parameters==========");
-    Map<String, String> queryParams =
-        StringUtils.getQueryParameters(exchange.getRequestURI().getQuery());
-    for (String key : queryParams.keySet()) {
-      logger.debug("{} = {} ", new Object[] {key, queryParams.get(key)});
-    }
-    logger.debug("====================================");
     // Returns the current working directory
     String currentDirectory = System.getProperty("user.dir");
     // Get the resource path
@@ -57,7 +39,7 @@ public class GetRequest implements Request {
       Path filepath = Paths.get(finalPath);
       Tika tika = new Tika();
       String type = tika.detect(new File(finalPath));
-      logger.info("The resource content-type : {}", new Object[] {type});
+      logger.debug("The resource content-type : {}", new Object[] {type});
       if (StringUtils.hasLength(type)) {
         responseheaders.set("Content-type", type);
         byte[] bytes = Files.readAllBytes(filepath);
