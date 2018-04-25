@@ -2,14 +2,15 @@ package amudhan.httpserver;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import com.sun.net.httpserver.HttpServer;
 import amudhan.httpserver.handlers.ServerHandler;
-import org.apache.logging.log4j.Logger;
-import org.apache.logging.log4j.LogManager;
 
 
 public class SimpleHttpServer {
   private static final Logger logger = LogManager.getLogger(SimpleHttpServer.class.getName());
+  public static final String currentDirectory = System.getProperty("user.dir");
 
   public static void main(String[] args) throws IOException {
     InetSocketAddress address = new InetSocketAddress("127.0.0.1", 8000);
@@ -20,4 +21,5 @@ public class SimpleHttpServer {
         + server.getAddress().getPort());
     server.start();
   }
+
 }
